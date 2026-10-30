@@ -1,0 +1,15 @@
+I just finished my Deep Learning semester project: a Cat vs Dog classifier that runs entirely in your browser.
+
+What I built
+- Fine-tuned MobileNetV2 (transfer learning, PyTorch) on 25,000 Kaggle photos
+- __ACC__% accuracy on a held-out test set
+- Exported the model to ONNX and deployed it on Vercel, so predictions run on-device
+
+Try it: __VERCEL_URL__
+Code, weights and dataset link: __GITHUB_URL__
+Report: __REPORT_URL__
+Video walkthrough: __YOUTUBE_URL__
+
+Thanks to our instructor for the guidance on this project.
+
+#DeepLearning #MachineLearning #ComputerVision #PyTorch #TransferLearning #Vercel

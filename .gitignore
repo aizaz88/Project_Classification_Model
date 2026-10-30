@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+data/*
+!data/README.md
+.vercel
+.DS_Store

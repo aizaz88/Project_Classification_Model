@@ -1,0 +1,10 @@
+torch>=2.2
+torchvision>=0.17
+pillow
+numpy
+scikit-learn
+matplotlib
+onnx>=1.16
+onnxruntime>=1.18
+kagglehub
+python-pptx
