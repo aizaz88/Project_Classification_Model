@@ -2,12 +2,12 @@
 
 **Deep Learning Semester Project**
 
-| | |
-|---|---|
-| **Name** | Your Name |
-| **Roll No** | Your Roll No |
-| **Course** | Deep Learning |
-| **Date** | 31 October 2026 |
+|             |                    |
+| ----------- | ------------------ |
+| **Name**    | Sami Ullah         |
+| **Roll No** | su92-bscsm-f23-063 |
+| **Course**  | Deep Learning      |
+| **Date**    | 31 October 2026    |
 
 **Project links**
 
@@ -42,13 +42,13 @@ Training a convolutional network from scratch needs a very large dataset and a l
 
 ## 2. Dataset
 
-| Item | Detail |
-|---|---|
-| Type | Secondary dataset (downloaded, not collected by the author) |
-| Name | Dog and Cat Classification Dataset |
-| Source | Kaggle: https://www.kaggle.com/datasets/bhavikjikadara/dog-and-cat-classification-dataset |
-| Content | About 25,000 JPEG photographs in two folders, `Cat` and `Dog`, in roughly equal numbers |
-| Image size | Varies from image to image (resized during preprocessing) |
+| Item       | Detail                                                                                    |
+| ---------- | ----------------------------------------------------------------------------------------- |
+| Type       | Secondary dataset (downloaded, not collected by the author)                               |
+| Name       | Dog and Cat Classification Dataset                                                        |
+| Source     | Kaggle: https://www.kaggle.com/datasets/bhavikjikadara/dog-and-cat-classification-dataset |
+| Content    | About 25,000 JPEG photographs in two folders, `Cat` and `Dog`, in roughly equal numbers   |
+| Image size | Varies from image to image (resized during preprocessing)                                 |
 
 ### 2.1 Cleaning
 
@@ -58,11 +58,11 @@ Files that cannot be opened as images are removed before training. After cleanin
 
 The data was split with a stratified 70 / 15 / 15 split and a fixed random seed (42), so every subset keeps the same cat-to-dog ratio and the split can be reproduced exactly.
 
-| Subset | Images | Share | Purpose |
-|---|---:|---:|---|
-| Training | 17,498 | 70.0% | Learning the model weights |
-| Validation | 3,750 | 15.0% | Choosing the best epoch |
-| Test | 3,750 | 15.0% | Final, unbiased evaluation (1,875 cats and 1,875 dogs) |
+| Subset     | Images | Share | Purpose                                                |
+| ---------- | -----: | ----: | ------------------------------------------------------ |
+| Training   | 17,498 | 70.0% | Learning the model weights                             |
+| Validation |  3,750 | 15.0% | Choosing the best epoch                                |
+| Test       |  3,750 | 15.0% | Final, unbiased evaluation (1,875 cats and 1,875 dogs) |
 
 The test images were never used for training or for model selection.
 
@@ -72,10 +72,10 @@ The test images were never used for training or for model selection.
 
 All images are converted to RGB and normalised with the ImageNet mean (0.485, 0.456, 0.406) and standard deviation (0.229, 0.224, 0.225), which is what the pre-trained network expects.
 
-| Stage | Transformations |
-|---|---|
-| Training | Random resized crop to 224 x 224 (scale 0.7 to 1.0), random horizontal flip, colour jitter (brightness, contrast and saturation 0.2) |
-| Validation and test | Resize to 256 pixels, centre crop to 224 x 224 |
+| Stage               | Transformations                                                                                                                      |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| Training            | Random resized crop to 224 x 224 (scale 0.7 to 1.0), random horizontal flip, colour jitter (brightness, contrast and saturation 0.2) |
+| Validation and test | Resize to 256 pixels, centre crop to 224 x 224                                                                                       |
 
 Random augmentation shows the network a slightly different version of each photo every epoch, which reduces over-fitting. Evaluation images are transformed deterministically so that results are repeatable.
 
@@ -99,21 +99,21 @@ The network has about 2.23 million parameters in total.
 
 Training is done in two phases, a common recipe for transfer learning.
 
-| Setting | Phase 1: train the head | Phase 2: fine-tune everything |
-|---|---|---|
-| Epochs | 3 | 4 |
-| Trainable layers | New classification head only | All layers |
-| Learning rate | 1e-3 | 1e-4 |
+| Setting          | Phase 1: train the head      | Phase 2: fine-tune everything |
+| ---------------- | ---------------------------- | ----------------------------- |
+| Epochs           | 3                            | 4                             |
+| Trainable layers | New classification head only | All layers                    |
+| Learning rate    | 1e-3                         | 1e-4                          |
 
 Other settings, shared by both phases:
 
-| Setting | Value |
-|---|---|
-| Framework | PyTorch and torchvision |
-| Optimiser | AdamW (weight decay 1e-4) |
-| Loss function | Cross-entropy |
-| Batch size | 32 |
-| Random seed | 42 |
+| Setting         | Value                                                  |
+| --------------- | ------------------------------------------------------ |
+| Framework       | PyTorch and torchvision                                |
+| Optimiser       | AdamW (weight decay 1e-4)                              |
+| Loss function   | Cross-entropy                                          |
+| Batch size      | 32                                                     |
+| Random seed     | 42                                                     |
 | Model selection | The epoch with the highest validation accuracy is kept |
 
 In phase 1 the pre-trained features are frozen so that the randomly initialised head can settle without damaging them. In phase 2 the whole network is fine-tuned with a ten times smaller learning rate, so the pre-trained features are adapted gently to cats and dogs.
@@ -126,17 +126,17 @@ The final model is evaluated once on the test set using accuracy, precision, rec
 
 The project is organised as follows in the GitHub repository:
 
-| Path | Contents |
-|---|---|
-| `src/common.py` | Data loading, splits, transforms, model definition and metric helpers |
-| `src/download_data.py` | Downloads the Kaggle dataset |
-| `src/train.py` | Two-phase training, evaluation, saving the weights and exporting to ONNX |
-| `src/evaluate.py` | Re-evaluates saved weights on the test split |
-| `src/predict.py` | Predicts a single image from the command line |
-| `src/export_onnx.py` | Converts the PyTorch weights to ONNX and checks that both outputs agree |
-| `models/` | Trained PyTorch weights (`catdog_mobilenetv2.pth`) |
-| `web/` | The deployed website (HTML, CSS, JavaScript and `model/catdog.onnx`) |
-| `report/`, `presentation/` | This report and the project slides |
+| Path                       | Contents                                                                 |
+| -------------------------- | ------------------------------------------------------------------------ |
+| `src/common.py`            | Data loading, splits, transforms, model definition and metric helpers    |
+| `src/download_data.py`     | Downloads the Kaggle dataset                                             |
+| `src/train.py`             | Two-phase training, evaluation, saving the weights and exporting to ONNX |
+| `src/evaluate.py`          | Re-evaluates saved weights on the test split                             |
+| `src/predict.py`           | Predicts a single image from the command line                            |
+| `src/export_onnx.py`       | Converts the PyTorch weights to ONNX and checks that both outputs agree  |
+| `models/`                  | Trained PyTorch weights (`catdog_mobilenetv2.pth`)                       |
+| `web/`                     | The deployed website (HTML, CSS, JavaScript and `model/catdog.onnx`)     |
+| `report/`, `presentation/` | This report and the project slides                                       |
 
 ## 5. Results
 
@@ -145,26 +145,26 @@ The project is organised as follows in the GitHub repository:
 Results on the held-out test set of 3,750 images:
 
 | Accuracy | Precision | Recall | F1 score |
-|---:|---:|---:|---:|
-| 99.04% | 99.04% | 99.04% | 99.04% |
+| -------: | --------: | -----: | -------: |
+|   99.04% |    99.04% | 99.04% |   99.04% |
 
 Precision, recall and F1 are averaged over the two classes. The result is 3,714 correct predictions out of 3,750.
 
 ### 5.2 Per-class performance
 
 | Class | Precision | Recall | F1 score | Test images |
-|---|---:|---:|---:|---:|
-| Cat | 99.09% | 98.99% | 99.04% | 1,875 |
-| Dog | 98.99% | 99.09% | 99.04% | 1,875 |
+| ----- | --------: | -----: | -------: | ----------: |
+| Cat   |    99.09% | 98.99% |   99.04% |       1,875 |
+| Dog   |    98.99% | 99.09% |   99.04% |       1,875 |
 
 ### 5.3 Confusion matrix
 
 ![Confusion matrix on the test set](../web/assets/confusion_matrix.png)
 
-| | Predicted Cat | Predicted Dog |
-|---|---:|---:|
-| **Actual Cat** | 1,856 | 19 |
-| **Actual Dog** | 17 | 1,858 |
+|                | Predicted Cat | Predicted Dog |
+| -------------- | ------------: | ------------: |
+| **Actual Cat** |         1,856 |            19 |
+| **Actual Dog** |            17 |         1,858 |
 
 The model made 36 mistakes (0.96% of the test set): 19 cats were labelled as dogs and 17 dogs were labelled as cats. The two error counts are almost equal, so the model shows no meaningful bias towards either class.
 
@@ -243,9 +243,9 @@ The project shows the full workflow of a deep learning application: choosing and
 
 ## References
 
-1. M. Sandler, A. Howard, M. Zhu, A. Zhmoginov and L.-C. Chen, "MobileNetV2: Inverted Residuals and Linear Bottlenecks", *IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)*, 2018.
-2. J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li and L. Fei-Fei, "ImageNet: A Large-Scale Hierarchical Image Database", *CVPR*, 2009.
-3. A. Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library", *Advances in Neural Information Processing Systems (NeurIPS)*, 2019.
-4. I. Loshchilov and F. Hutter, "Decoupled Weight Decay Regularization" (AdamW), *ICLR*, 2019.
+1. M. Sandler, A. Howard, M. Zhu, A. Zhmoginov and L.-C. Chen, "MobileNetV2: Inverted Residuals and Linear Bottlenecks", _IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)_, 2018.
+2. J. Deng, W. Dong, R. Socher, L.-J. Li, K. Li and L. Fei-Fei, "ImageNet: A Large-Scale Hierarchical Image Database", _CVPR_, 2009.
+3. A. Paszke et al., "PyTorch: An Imperative Style, High-Performance Deep Learning Library", _Advances in Neural Information Processing Systems (NeurIPS)_, 2019.
+4. I. Loshchilov and F. Hutter, "Decoupled Weight Decay Regularization" (AdamW), _ICLR_, 2019.
 5. Kaggle, "Dog and Cat Classification Dataset": https://www.kaggle.com/datasets/bhavikjikadara/dog-and-cat-classification-dataset
 6. ONNX Runtime Web documentation: https://onnxruntime.ai/docs/tutorials/web/
